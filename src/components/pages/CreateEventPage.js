@@ -13,6 +13,15 @@ function CreateEventPage() {
     thematic: '',
   });
 
+  const handleUpload = () => {
+    api.postCreateEvent({
+      name: state.name,
+      description: state.description,
+      entries: state.entries,
+      thematic: state.thematic,
+    });
+  };
+
   return (
     <Box sx={styles.container}>
       <h1 style={{ color: 'grey', fontFamily: 'Lato' }}>Create New Event</h1>
@@ -45,6 +54,9 @@ function CreateEventPage() {
           minRows={3}
         />
       </Box>
+      <Button sx={styles.button} onClick={() => handleUpload()}>
+        Upload
+      </Button>
     </Box>
   );
 }

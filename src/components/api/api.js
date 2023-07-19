@@ -1,11 +1,11 @@
 const URL = 'http://localhost:5000';
 
 const postAuth = (body, onSuccess, onFailure) => {
-  _fetch('/auth', onSuccess, onFailure, 'POST', body);
+  _fetch('/auth', onSuccess, onFailure, 'POST', body, false);
 };
 
 const postSignup = (body, onSuccess, onFailure) => {
-  _fetch('/signup', onSuccess, onFailure, 'POST', body);
+  _fetch('/signup', onSuccess, onFailure, 'POST', body, false);
 };
 
 const postOrigami = (body) => {
@@ -26,13 +26,34 @@ const getEvents = () => {
   );
 };
 
-const _fetch = (path, onSuccess, onFailure, method = 'GET', body) => {
+const postCreateEvent = (body) => {
+  _fetch(
+    '/',
+    (res) => console.log(res),
+    () => alert('Failed'),
+    'POST',
+    body
+  );
+};
+
+const _fetch = (
+  path,
+  onSuccess,
+  onFailure,
+  method = 'GET',
+  body,
+  auth = true
+) => {
   let req = {
     method,
     headers: {
       'Content-Type': 'application/json',
     },
   };
+  let token = auth
+    ? JSON.parse(localStorage.getItem('orukami_user'))?.token || ''
+    : '';
+  auth && (req.headers.Authorization = 'Bearer ' + token);
   body && (req.body = JSON.stringify(body));
   fetch(URL + path, req)
     .then((response) => {
@@ -49,6 +70,7 @@ const api = {
   postSignup,
   postOrigami,
   getEvents,
+  postCreateEvent,
 };
 
 export default api;

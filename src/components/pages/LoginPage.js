@@ -14,8 +14,8 @@ function LoginPage() {
     setLoading(true);
     api.postAuth(
       state,
-      ({ message, data }) => {
-        enqueueSnackbar(message, { variant: 'success' });
+      (data) => {
+        enqueueSnackbar('Login Successfully.', { variant: 'success' });
         setLoading(false);
         localStorage.setItem('orukami_user', JSON.stringify(data));
         navigate('/home');

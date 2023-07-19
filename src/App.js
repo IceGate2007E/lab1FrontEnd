@@ -32,7 +32,7 @@ function App() {
 function UserRoutes() {
   const user = JSON.parse(localStorage.getItem('orukami_user'));
 
-  if (user.role === 'admin') {
+  if (user.role === 'Admin') {
     return <AdminRoutes />;
   }
 

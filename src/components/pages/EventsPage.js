@@ -1,65 +1,7 @@
-import { Box, Button, MenuItem, Select } from '@mui/material';
 import React from 'react';
-import InputText from '../input/InputText';
-import { FaChevronUp } from 'react-icons/fa';
-import api from '../api/api';
-import { Textarea } from '@mui/joy';
 
-function CreateEventPage() {
-  const [state, setState] = React.useState({
-    name: '',
-    description: '',
-    entries: 50,
-    thematic: '',
-  });
-
-  const handleUpload = () => {
-    api.postCreateEvent({
-      name: state.name,
-      description: state.description,
-      entries: state.entries,
-      thematic: state.thematic,
-    });
-  };
-
-  return (
-    <Box sx={styles.container}>
-      <h1 style={{ color: 'grey', fontFamily: 'Lato' }}>Create New Event</h1>
-      <span style={{ font: '500 16px Lato' }}>Define competition rules!</span>
-      <Box sx={styles.form} marginTop='32px'>
-        <span>Title:</span>
-        <InputText
-          value={state['name']}
-          onChange={(e) => setState({ ...state, name: e.target.value })}
-        />
-        <span>Thematic:</span>
-        <InputText
-          value={state['thematic']}
-          onChange={(e) => setState({ ...state, thematic: e.target.value })}
-        />
-        <span>Entries:</span>
-        <InputText
-          type='number'
-          value={state['entries']}
-          onChange={(e) => setState({ ...state, entries: e.target.value })}
-        />
-        <span>Description:</span>
-        <Textarea
-          value={state['description']}
-          onChange={(e) => setState({ ...state, description: e.target.value })}
-          sx={{
-            border: 'none',
-            boxShadow: '0px 0px 4px rgba(0,0,1,0.2)',
-            width: '100%',
-          }}
-          minRows={3}
-        />
-      </Box>
-      <Button sx={styles.button} onClick={() => handleUpload()}>
-        Create Event
-      </Button>
-    </Box>
-  );
+function EventsPage() {
+  return <div></div>;
 }
 
 const styles = {
@@ -169,4 +111,4 @@ const styles = {
   },
 };
 
-export default CreateEventPage;
+export default EventsPage;

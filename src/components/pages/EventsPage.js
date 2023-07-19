@@ -1,7 +1,13 @@
+import { Box } from '@mui/material';
 import React from 'react';
 
 function EventsPage() {
-  return <div></div>;
+  return (
+    <Box sx={styles.container}>
+      <h1 style={{ color: 'grey', fontFamily: 'Lato' }}>Events</h1>
+      <span style={{ font: '500 16px Lato' }}>Compite with others users!</span>
+    </Box>
+  );
 }
 
 const styles = {

@@ -18,11 +18,10 @@ function SignupPage() {
     setLoading(true);
     api.postSignup(
       state,
-      ({ message, data }) => {
-        enqueueSnackbar(message, { variant: 'success' });
+      (res) => {
+        enqueueSnackbar('SignUp Successfully.', { variant: 'success' });
         setLoading(false);
-        localStorage.setItem('orukami_user', JSON.stringify(data));
-        navigate('/home');
+        navigate('/login');
       },
       ({ message }) => {
         enqueueSnackbar(message, { variant: 'error' });

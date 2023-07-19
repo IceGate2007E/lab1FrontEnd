@@ -13,6 +13,7 @@ import NavbarUser from './components/navbar/NavbarUser';
 import NavbarAdmin from './components/navbar/NavbarAdmin';
 import UploadOrigamiPage from './components/pages/UploadOrigamiPage';
 import SearchPage from './components/pages/SearchPage';
+import CreateEventPage from './components/pages/CreateEventPage';
 
 function App() {
   return (
@@ -41,7 +42,7 @@ function UserRoutes() {
       <Routes>
         <Route path='/home' element={<h1>HOME PAGE...</h1>} />
         <Route path='/uploadOrigami' element={<UploadOrigamiPage />} />
-        <Route path='/search' element={<SearchPage />} />
+        <Route path='/search' element={<CreateEventPage />} />
         <Route path='/*' element={<h1>Error</h1>} />
       </Routes>
     </>

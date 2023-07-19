@@ -43,7 +43,7 @@ function Navbar({ tabs }) {
           onMouseEnter={() => setOpenMenu(true)}
           onMouseLeave={() => setOpenMenu(false)}
         >
-          {`${user.firstname} ${user.lastname}`}
+          {user.name}
           {openMenu && (
             <>
               <div className='block-space' />

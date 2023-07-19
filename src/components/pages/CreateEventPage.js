@@ -3,155 +3,47 @@ import React from 'react';
 import InputText from '../input/InputText';
 import { FaChevronUp } from 'react-icons/fa';
 import api from '../api/api';
+import { Textarea } from '@mui/joy';
 
 function CreateEventPage() {
-  const [title, setTitle] = React.useState('');
-  const [category, setCategory] = React.useState('Other');
-  const [difficulty, setDifficulty] = React.useState('All');
-  const [type, setType] = React.useState('Common');
-
-  const handleChange = (event) => {
-    setCategory(event.target.value);
-  };
-  const handleChangeDifficulty = (event) => {
-    setDifficulty(event.target.value);
-  };
-  const handleChangeType = (event) => {
-    setType(event.target.value);
-  };
+  const [state, setState] = React.useState({
+    name: '',
+    description: '',
+    entries: '',
+    thematic: '',
+  });
 
   return (
     <Box sx={styles.container}>
       <h1 style={{ color: 'grey', fontFamily: 'Lato' }}>Create New Event</h1>
       <span style={{ font: '500 16px Lato' }}>Define competition rules!</span>
-      <Box
-        sx={{
-          display: 'flex',
-          margin: '32px',
-          alignItems: 'center',
-          span: { font: '700 18px Lato', color: 'grey' },
-          gap: '12px',
-        }}
-      >
-        <span>Title: </span>
-        <Box width='320px'>
-          <InputText
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-          ></InputText>
-        </Box>
-        <span>Difficulty: </span>
-        <Box sx={styles.select}>
-          <Select
-            value={difficulty}
-            onChange={handleChangeDifficulty}
-            IconComponent={FaChevronUp}
-            MenuProps={{
-              PaperProps: {
-                sx: {
-                  '& .MuiMenuItem-root': {
-                    background: 'white',
-                    padding: '8px',
-                    color: '#000',
-                    fontFamily: 'Lato',
-                    fontSize: '18px',
-                    fontStyle: 'normal',
-                    fontWeight: '600',
-                    lineHeight: '100%',
-                  },
-                  '& .MuiMenuItem-root:hover': {
-                    color: 'grey',
-                    background: 'white',
-                  },
-                },
-              },
-            }}
-          >
-            {['All', 'Easy', 'Medium', 'Hard'].map((cat, i) => (
-              <MenuItem value={cat} key={i}>
-                {cat}
-              </MenuItem>
-            ))}
-          </Select>
-        </Box>
-        <span>Category: </span>
-        <Box sx={styles.select}>
-          <Select
-            value={category}
-            onChange={handleChange}
-            IconComponent={FaChevronUp}
-            MenuProps={{
-              PaperProps: {
-                sx: {
-                  '& .MuiMenuItem-root': {
-                    background: 'white',
-                    padding: '8px',
-                    color: '#000',
-                    fontFamily: 'Lato',
-                    fontSize: '18px',
-                    fontStyle: 'normal',
-                    fontWeight: '600',
-                    lineHeight: '100%',
-                  },
-                  '& .MuiMenuItem-root:hover': {
-                    color: 'grey',
-                    background: 'white',
-                  },
-                },
-              },
-            }}
-          >
-            {['Other', 'Animal', 'Flower', 'Vehicle', 'Stars'].map((cat, i) => (
-              <MenuItem value={cat} key={i}>
-                {cat}
-              </MenuItem>
-            ))}
-          </Select>
-        </Box>
-        <span>Type: </span>
-        <Box sx={styles.select}>
-          <Select
-            value={type}
-            onChange={handleChangeType}
-            IconComponent={FaChevronUp}
-            MenuProps={{
-              PaperProps: {
-                sx: {
-                  '& .MuiMenuItem-root': {
-                    background: 'white',
-                    padding: '8px',
-                    color: '#000',
-                    fontFamily: 'Lato',
-                    fontSize: '18px',
-                    fontStyle: 'normal',
-                    fontWeight: '600',
-                    lineHeight: '100%',
-                  },
-                  '& .MuiMenuItem-root:hover': {
-                    color: 'grey',
-                    background: 'white',
-                  },
-                },
-              },
-            }}
-          >
-            {[
-              'Common',
-              'Action',
-              'Modular',
-              'Wet-folding',
-              'Pureland',
-              'Tessellations',
-              'Kirigami',
-              'Strip Folding',
-            ].map((cat, i) => (
-              <MenuItem value={cat} key={i}>
-                {cat}
-              </MenuItem>
-            ))}
-          </Select>
-        </Box>
-        <Button sx={styles.button}>Search</Button>
+      <Box sx={styles.form} marginTop='32px'>
+        <span>Title:</span>
+        <InputText
+          value={state['name']}
+          onChange={(e) => setState({ ...state, name: e.target.value })}
+        />
+        <span>Thematic:</span>
+        <InputText
+          value={state['entries']}
+          onChange={(e) => setState({ ...state, thematic: e.target.value })}
+        />
+        <span>Entries:</span>
+        <InputText
+          value={state['entries']}
+          onChange={(e) => setState({ ...state, entries: e.target.value })}
+        />
+        <span>Description:</span>
+        <Textarea
+          value={state['description']}
+          onChange={(e) => setState({ ...state, description: e.target.value })}
+          sx={{
+            border: 'none',
+            boxShadow: '0px 0px 4px rgba(0,0,1,0.2)',
+            width: '100%',
+          }}
+          minRows={3}
+        />
       </Box>
     </Box>
   );
@@ -215,6 +107,52 @@ const styles = {
     '&:disabled': {
       color: 'grey',
     },
+  },
+  form: {
+    display: 'grid',
+    gridTemplateColumns: '120px 320px',
+    gap: '12px 8px',
+    span: {
+      color: 'grey',
+      fontSize: '18px',
+      textAlign: 'right',
+      alignSelf: 'center',
+    },
+  },
+  input: {
+    display: 'flex',
+    alignItems: 'center',
+    margin: '8px',
+    width: '480px',
+    textAlign: 'right',
+    fontSize: '18px',
+    color: 'grey',
+  },
+  intro: {
+    color: 'grey',
+    margin: '12px 0px 32px',
+  },
+  link: {
+    color: 'grey',
+    fontWeight: '500',
+    margin: '0px 8px',
+    textDecoration: 'none',
+  },
+  loading: {
+    color: 'grey',
+    right: '-48px',
+    position: 'absolute',
+  },
+  main: {
+    flex: 1,
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    marginTop: '96px',
+  },
+  sideBar: {
+    objectFit: 'cover',
+    height: '100%',
   },
 };
 

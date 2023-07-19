@@ -44,7 +44,7 @@ function SignupPage() {
         <Box sx={styles.form}>
           <span>Name:</span>
           <InputText
-            value={state['firstname']}
+            value={state['name']}
             onChange={(e) => setState({ ...state, name: e.target.value })}
           />
           <span>Email:</span>

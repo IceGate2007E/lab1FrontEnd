@@ -1,11 +1,11 @@
 const URL = 'http://localhost:5000';
 
 const postAuth = (body, onSuccess, onFailure) => {
-  _fetch('/auth', onSuccess, onFailure, 'POST', body, false);
+  _fetch('/user/register', onSuccess, onFailure, 'POST', body, false);
 };
 
 const postSignup = (body, onSuccess, onFailure) => {
-  _fetch('/signup', onSuccess, onFailure, 'POST', body, false);
+  _fetch('/user/login', onSuccess, onFailure, 'POST', body, false);
 };
 
 const postOrigami = (body) => {

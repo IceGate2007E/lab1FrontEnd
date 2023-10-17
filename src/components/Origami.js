@@ -8,8 +8,8 @@ function Origami({ origami, index }) {
     <div
       style={{
         boxShadow: '0px 0px 4px rgba(0,0,0,0.4)',
-        width: '320px',
-        height: '240px',
+        width: '360px',
+        height: '200px',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
@@ -26,21 +26,61 @@ function Origami({ origami, index }) {
           display: 'flex',
           width: '100%',
           position: 'absolute',
+          boxSizing: 'border-box',
+          padding: '12px',
         }}
       >
         <Link
           to={'/details/' + index}
           style={{ textDecoration: 'none', color: 'grey' }}
         >
-          <span style={{ font: '700 20px Lato' }}>Title: {origami.title}</span>
+          <span style={{ font: '700 20px Lato' }}>{origami.title}</span>
         </Link>
-        <span style={{ font: '500 18px Lato' }}>
-          Category: {origami.category}
+      </Box>
+      <Box
+        sx={{
+          bottom: '0px',
+          display: 'flex',
+          width: '100%',
+          position: 'absolute',
+          boxSizing: 'border-box',
+          padding: '12px',
+        }}
+      >
+        <span style={{ font: '700 18px Lato' }}>
+          by: {origami.author || 'Anonymous'}
         </span>
-        <span style={{ font: '500 18px Lato' }}>Type: {origami.type}</span>
+      </Box>
+      <Box
+        sx={{
+          top: '0px',
+          right: '0px',
+          textAlign: 'right',
+          display: 'flex',
+          flexDirection: 'column',
+          position: 'absolute',
+          boxSizing: 'border-box',
+          padding: '12px',
+          gap: '8px',
+          span: {
+            font: '500 14px Lato',
+            padding: '4px',
+            borderRadius: '8px',
+            background: '#AFAFAF',
+            color: 'white',
+            width: 'fit-content',
+            alignSelf: 'flex-end',
+          },
+        }}
+      >
+        <span>{origami.category}</span>
+        <span>{origami.type}</span>
       </Box>
       <img
-        style={{ maxHeight: '200px', maxWidth: '300px' }}
+        style={{
+          maxHeight: '174px',
+          maxWidth: '310px',
+        }}
         src={'data:image/png;base64,' + origami.preview}
       />
     </div>

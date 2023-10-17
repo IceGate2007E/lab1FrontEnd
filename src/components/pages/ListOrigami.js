@@ -12,7 +12,32 @@ function ListOrigami() {
     if (fetchRef.current) return;
     fetchRef.current = true;
     api.getOrigamis((res) => {
-      setData(res);
+      setData([
+        ...res,
+        ...res,
+        ...res,
+        ...res,
+        ...res,
+        ...res,
+        ...res,
+        ...res,
+        ...res,
+        ...res,
+        ...res,
+        ...res,
+        ...res,
+        ...res,
+        ...res,
+        ...res,
+        ...res,
+        ...res,
+        ...res,
+        ...res,
+        ...res,
+        ...res,
+        ...res,
+        ...res,
+      ]);
       setLoading(false);
     });
   }, []);
@@ -20,7 +45,12 @@ function ListOrigami() {
   return (
     <Box sx={styles.container}>
       {loading && <CircularProgress sx={{ margin: '32px' }} size={100} />}
-      <Box display={'flex'}>
+      <Box
+        display={'flex'}
+        width={'100%'}
+        flexWrap={'wrap'}
+        justifyContent={'center'}
+      >
         {data.map((origami, i) => {
           return <Origami origami={origami} index={i} />;
         })}
@@ -32,10 +62,10 @@ function ListOrigami() {
 const styles = {
   container: {
     display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
+    justifyContent: 'center',
     padding: '20px',
     boxSizing: 'border-box',
+    width: '100vw',
   },
   select: {
     width: '160px',

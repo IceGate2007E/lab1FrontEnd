@@ -12,14 +12,8 @@ const getOrigamis = (onSuccess) => {
   _fetch('/getOrigamis', onSuccess, () => {});
 };
 
-const postOrigami = (body) => {
-  _fetch(
-    '/uploadOrigami',
-    () => alert('Sended'),
-    () => {},
-    'POST',
-    body
-  );
+const postOrigami = (body, onSuccess, onFailure) => {
+  _fetch('/origami/create', onSuccess, onFailure, 'POST', body);
 };
 
 const getEvents = () => {

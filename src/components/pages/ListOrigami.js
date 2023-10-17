@@ -1,25 +1,24 @@
 import { Box, CircularProgress } from '@mui/material';
-import React from 'react';
+import React, { useRef } from 'react';
 import api from '../api/api';
 import Origami from '../Origami';
 
 function ListOrigami() {
   const [data, setData] = React.useState([]);
   const [loading, setLoading] = React.useState(true);
+  const fetchRef = useRef(null);
 
   React.useEffect(() => {
+    if (fetchRef.current) return;
+    fetchRef.current = true;
     api.getOrigamis((res) => {
       setData(res);
       setLoading(false);
     });
-  });
+  }, []);
 
   return (
     <Box sx={styles.container}>
-      <h1 style={{ color: 'grey', fontFamily: 'Lato' }}>
-        Upload Origami Community
-      </h1>
-      <span style={{ font: '500 16px Lato' }}>Upload your new creations!</span>
       {loading && <CircularProgress sx={{ margin: '32px' }} size={100} />}
       <Box display={'flex'}>
         {data.map((origami, i) => {
@@ -35,6 +34,8 @@ const styles = {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
+    padding: '20px',
+    boxSizing: 'border-box',
   },
   select: {
     width: '160px',

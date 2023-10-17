@@ -12,6 +12,7 @@ import { Category } from '../icons/Category';
 import { Textarea } from '@mui/joy';
 import Step from '../Step';
 import ReactPlayer from 'react-player';
+import { enqueueSnackbar } from 'notistack';
 
 function convertImageToBase64(file, callback) {
   let reader = new FileReader();
@@ -44,12 +45,25 @@ function UploadOfficialPage() {
   const handlePreviewFile = (file) => {
     setFile(file);
   };
-  const [file, setFile] = React.useState();
+  const [file, setFile] = React.useState(null);
 
   const [difficulty, setDifficulty] = React.useState('All');
   const [type, setType] = React.useState('Common');
 
   const [time, setTime] = React.useState(5);
+  const [loading, setLoading] = React.useState(false);
+
+  const reloadState = () => {
+    setSteps([{ desc: '', image: null }]);
+    setVideoURL('');
+    setDescription('');
+    setTitle('');
+    setCategory('Other');
+    setFile(null);
+    setDifficulty('All');
+    setType('Common');
+    setTime(5);
+  };
 
   const handleChangeDifficulty = (event) => {
     setDifficulty(event.target.value);
@@ -58,33 +72,65 @@ function UploadOfficialPage() {
     setType(event.target.value);
   };
 
-  const handleUpload = () => {
-    let images = [];
-    let steps_desc = [];
+  const validateOrigami = () => {
+    if (title === '') return "Title can't be empty.";
+    if (difficulty === 'All') return 'Specify a difficulty.';
+    if (!file) return "Preview can't be empty.";
+    if (description === '') return "Description can't be empty.";
+    for (let i = 0; i < steps.length; i++) {
+      if (steps[i].desc === '' || !steps[i].image)
+        return "Steps fields can't be empty.";
+    }
+    return '';
+  };
 
-    Promise.all(
-      steps.map((s) =>
-        convertImage(s.image).then((res) => {
-          images.push(res.split(',')[1]);
-          steps_desc.push(s.desc);
-        })
-      )
-    ).then(() => {
-      convertImageToBase64(file, (res) => {
-        api.postOrigami({
-          category: category,
-          title: title,
-          description: description,
-          preview: res.split(',')[1],
-          images: images,
-          steps: steps_desc,
-          videoURL: videoURL,
-          difficulty: difficulty,
-          type: type,
-          estimatedTime: time,
+  const handleUpload = () => {
+    setLoading(true);
+    let warning = validateOrigami();
+    if (warning) {
+      enqueueSnackbar(warning, { variant: 'error' });
+      setLoading(false);
+    } else {
+      let images = [];
+      let steps_desc = [];
+
+      Promise.all(
+        steps.map((s) =>
+          convertImage(s.image).then((res) => {
+            images.push(res.split(',')[1]);
+            steps_desc.push(s.desc);
+          })
+        )
+      ).then(() => {
+        convertImageToBase64(file, (res) => {
+          api.postOrigami(
+            {
+              category: category,
+              title: title,
+              description: description,
+              preview: res.split(',')[1],
+              images: images,
+              steps: steps_desc,
+              videoURL: videoURL,
+              difficulty: difficulty,
+              type: type,
+              estimatedTime: time,
+            },
+            () => {
+              enqueueSnackbar('Origami created successfully.', {
+                variant: 'success',
+              });
+              setLoading(false);
+              reloadState();
+            },
+            ({ message }) => {
+              enqueueSnackbar(message, { variant: 'error' });
+              setLoading(false);
+            }
+          );
         });
       });
-    });
+    }
   };
 
   const insideDragAndDrop = file ? (
@@ -145,10 +191,12 @@ function UploadOfficialPage() {
 
   return (
     <Box sx={styles.container}>
-      <h1 style={{ color: 'grey', fontFamily: 'Lato' }}>
-        Upload Origami Official
-      </h1>
-      <span style={{ font: '500 16px Lato' }}>Upload your new creations!</span>
+      {
+        //<h1 style={{ color: 'grey', fontFamily: 'Lato' }}>
+        //  Upload Origami Official
+        //</h1>
+        //<span style={{ font: '500 16px Lato' }}>Upload your new creations!</span>
+      }
       <Box
         sx={{
           display: 'flex',
@@ -276,8 +324,8 @@ function UploadOfficialPage() {
             ))}
           </Select>
         </Box>
-        <span>Estimated Time: </span>
-        <Box width='120px'>
+        <span>Time (min): </span>
+        <Box width='90px'>
           <InputText
             type='number'
             value={time}
@@ -346,7 +394,11 @@ function UploadOfficialPage() {
         </Box>
         <span>(optional)</span>
       </Box>
-      <Button sx={styles.button} onClick={() => handleUpload()}>
+      <Button
+        sx={styles.button}
+        onClick={() => handleUpload()}
+        disabled={loading}
+      >
         Upload
       </Button>
     </Box>

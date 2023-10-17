@@ -61,7 +61,7 @@ function Step({ step, index, onChange }) {
       <span
         style={{ font: '700 18px Lato', color: 'grey', marginLeft: '32px' }}
       >
-        Preview:{' '}
+        Image:{' '}
       </span>
       <FileUploader
         types={['JPG', 'PNG', 'JPEG']}

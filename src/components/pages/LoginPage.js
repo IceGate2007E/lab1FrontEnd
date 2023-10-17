@@ -4,6 +4,7 @@ import InputText from '../input/InputText';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import api from '../api/api';
 import { enqueueSnackbar } from 'notistack';
+import '@fontsource/lato';
 
 function LoginPage() {
   const navigate = useNavigate();
@@ -87,8 +88,7 @@ const styles = {
     border: '4px solid #FFFFFF',
     borderRadius: '48px',
     color: 'white',
-    fontSize: 18,
-    fontWeight: 700,
+    font: '700 18px Lato',
     margin: '24px',
     padding: '12px 32px',
     width: '160px',
@@ -107,6 +107,7 @@ const styles = {
     height: '100vh',
     width: '100vw',
     display: 'flex',
+    font: '500 18px Lato',
   },
   form: {
     display: 'grid',
@@ -125,7 +126,7 @@ const styles = {
     margin: '8px',
     width: '480px',
     textAlign: 'right',
-    fontSize: '18px',
+    font: '400 18px Lato',
     color: 'grey',
   },
   link: {

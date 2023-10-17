@@ -46,6 +46,14 @@ const _fetch = (path, onSuccess, onFailure, method = 'GET', body) => {
     });
 };
 
+const getMostRecentOrigamis = (onSuccess) => {
+  _fetch('/getOrigamis', onSuccess, console.log);
+};
+
+const getCategoriesOrigami = (onSuccess) => {
+  _fetch('/getOrigamisCategory', onSuccess, console.log);
+};
+
 const api = {
   postAuth,
   postSignup,
@@ -53,6 +61,8 @@ const api = {
   getEvents,
   postCreateEvent,
   getOrigamis,
+  getMostRecentOrigamis,
+  getCategoriesOrigami,
 };
 
 export default api;

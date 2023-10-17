@@ -18,6 +18,7 @@ import EventsPage from './components/pages/EventsPage';
 import UploadOfficialPage from './components/pages/UpdateOfficialPage';
 import ListOrigami from './components/pages/ListOrigami';
 import DetailsPage from './components/pages/DetailsPage';
+import HomePage from './components/pages/HomePage';
 
 function App() {
   return (
@@ -44,7 +45,7 @@ function UserRoutes() {
     <>
       <NavbarUser />
       <Routes>
-        <Route path='/home' element={<h1></h1>} />
+        <Route path='/home' element={<HomePage />} />
         <Route path='/uploadOrigami' element={<UploadOrigamiPage />} />
         <Route path='/search' element={<SearchPage />} />
         <Route path='/events' element={<EventsPage />} />
@@ -59,7 +60,7 @@ function AdminRoutes() {
     <>
       <NavbarAdmin />
       <Routes>
-        <Route path='/home' element={<h1></h1>} />
+        <Route path='/home' element={<HomePage />} />
         <Route path='/createOrigami' element={<UploadOfficialPage />} />
         <Route path='/createEvent' element={<CreateEventPage />} />
         <Route path='/listOrigami' element={<ListOrigami />} />

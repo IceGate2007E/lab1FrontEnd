@@ -57,7 +57,9 @@ function CreateEventPage() {
         <InputText
           type='number'
           value={state['entries']}
-          onChange={(e) => setState({ ...state, entries: e.target.value })}
+          onChange={(e) =>
+            setState({ ...state, entries: Math.max(10, e.target.value) })
+          }
         />
         <span>Description:</span>
         <Textarea

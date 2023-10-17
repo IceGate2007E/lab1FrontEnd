@@ -12,32 +12,7 @@ function ListOrigami() {
     if (fetchRef.current) return;
     fetchRef.current = true;
     api.getOrigamis((res) => {
-      setData([
-        ...res,
-        ...res,
-        ...res,
-        ...res,
-        ...res,
-        ...res,
-        ...res,
-        ...res,
-        ...res,
-        ...res,
-        ...res,
-        ...res,
-        ...res,
-        ...res,
-        ...res,
-        ...res,
-        ...res,
-        ...res,
-        ...res,
-        ...res,
-        ...res,
-        ...res,
-        ...res,
-        ...res,
-      ]);
+      setData(res);
       setLoading(false);
     });
   }, []);

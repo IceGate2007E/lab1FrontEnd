@@ -8,11 +8,15 @@ const postSignup = (body, onSuccess, onFailure) => {
   _fetch('/user/register', onSuccess, onFailure, 'POST', body, false);
 };
 
+const getOrigamis = (onSuccess) => {
+  _fetch('/getOrigamis', onSuccess, () => {});
+};
+
 const postOrigami = (body) => {
   _fetch(
     '/uploadOrigami',
     () => alert('Sended'),
-    () => alert('Failed'),
+    () => {},
     'POST',
     body
   );
@@ -22,7 +26,7 @@ const getEvents = () => {
   _fetch(
     '/event/get/all',
     (res) => console.log(res),
-    () => alert('Failed')
+    () => {}
   );
 };
 
@@ -41,7 +45,6 @@ const _fetch = (path, onSuccess, onFailure, method = 'GET', body) => {
     method,
     headers: {
       'Content-Type': 'application/json',
-      mode: 'no-cors',
     },
   };
   body && (req.body = JSON.stringify(body));
@@ -61,6 +64,7 @@ const api = {
   postOrigami,
   getEvents,
   postCreateEvent,
+  getOrigamis,
 };
 
 export default api;

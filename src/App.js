@@ -15,6 +15,9 @@ import UploadOrigamiPage from './components/pages/UploadOrigamiPage';
 import SearchPage from './components/pages/SearchPage';
 import CreateEventPage from './components/pages/CreateEventPage';
 import EventsPage from './components/pages/EventsPage';
+import UploadOfficialPage from './components/pages/UpdateOfficialPage';
+import ListOrigami from './components/pages/ListOrigami';
+import DetailsPage from './components/pages/DetailsPage';
 
 function App() {
   return (
@@ -41,7 +44,7 @@ function UserRoutes() {
     <>
       <NavbarUser />
       <Routes>
-        <Route path='/home' element={<h1>HOME PAGE...</h1>} />
+        <Route path='/home' element={<h1></h1>} />
         <Route path='/uploadOrigami' element={<UploadOrigamiPage />} />
         <Route path='/search' element={<SearchPage />} />
         <Route path='/events' element={<EventsPage />} />
@@ -56,9 +59,19 @@ function AdminRoutes() {
     <>
       <NavbarAdmin />
       <Routes>
-        <Route path='/home' element={<h1>HOME ADMIN PAGE...</h1>} />
-        <Route path='/events' element={<h1>EVENTS ADMIN PAGE...</h1>} />
-        <Route path='/*' element={<h1>Error</h1>} />
+        <Route path='/home' element={<h1></h1>} />
+        <Route path='/createOrigami' element={<UploadOfficialPage />} />
+        <Route path='/createEvent' element={<CreateEventPage />} />
+        <Route path='/listOrigami' element={<ListOrigami />} />
+        <Route path='/details/:id' element={<DetailsPage />} />
+        <Route
+          path='/*'
+          element={
+            <div style={{ display: 'flex', justifyContent: 'center' }}>
+              <h1>Error, page not found.</h1>
+            </div>
+          }
+        />
       </Routes>
     </>
   );

@@ -24,14 +24,8 @@ const getEvents = () => {
   );
 };
 
-const postCreateEvent = (body) => {
-  _fetch(
-    '/',
-    (res) => console.log(res),
-    () => alert('Failed'),
-    'POST',
-    body
-  );
+const postCreateEvent = (body, onSuccess) => {
+  _fetch('/', onSuccess, () => {}, 'POST', body);
 };
 
 const _fetch = (path, onSuccess, onFailure, method = 'GET', body) => {

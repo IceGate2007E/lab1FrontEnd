@@ -4,8 +4,11 @@ import InputText from '../input/InputText';
 import { FaChevronUp } from 'react-icons/fa';
 import api from '../api/api';
 import { Textarea } from '@mui/joy';
+import { enqueueSnackbar } from 'notistack';
+import { RedoOutlined } from '@mui/icons-material';
 
 function CreateEventPage() {
+  const [loading, setLoading] = React.useState(false);
   const [state, setState] = React.useState({
     name: '',
     description: '',
@@ -13,19 +16,32 @@ function CreateEventPage() {
     thematic: '',
   });
 
+  const validateEvent = () => {
+    if (state.name === '') return "Title can't be empty.";
+    if (state.description === '') return "Description can't be empty.";
+    if (state.thematic === '') return "Thematic can't be empty.";
+    return '';
+  };
+
   const handleUpload = () => {
-    api.postCreateEvent({
-      name: state.name,
-      description: state.description,
-      entries: state.entries,
-      thematic: state.thematic,
-    });
+    setLoading(true);
+    let warning = validateEvent();
+    if (warning) enqueueSnackbar(warning, { variant: 'error' });
+    else
+      api.postCreateEvent(state, () => {
+        enqueueSnackbar('Event created successfully.', { variant: 'success' });
+        setLoading(false);
+        setState({
+          name: '',
+          description: '',
+          entries: 50,
+          thematic: '',
+        });
+      });
   };
 
   return (
     <Box sx={styles.container}>
-      <h1 style={{ color: 'grey', fontFamily: 'Lato' }}>Create New Event</h1>
-      <span style={{ font: '500 16px Lato' }}>Define competition rules!</span>
       <Box sx={styles.form} marginTop='32px'>
         <span>Title:</span>
         <InputText
@@ -55,7 +71,11 @@ function CreateEventPage() {
           minRows={3}
         />
       </Box>
-      <Button sx={styles.button} onClick={() => handleUpload()}>
+      <Button
+        sx={styles.button}
+        onClick={() => handleUpload()}
+        disabled={loading}
+      >
         Create Event
       </Button>
     </Box>
@@ -67,6 +87,9 @@ const styles = {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
+    padding: '20px 80px',
+    boxSizing: 'border-box',
+    width: '100vw',
   },
   select: {
     width: '160px',
@@ -127,7 +150,7 @@ const styles = {
     gap: '12px 8px',
     span: {
       color: 'grey',
-      fontSize: '18px',
+      font: '700 18px Lato',
       textAlign: 'right',
       alignSelf: 'center',
     },

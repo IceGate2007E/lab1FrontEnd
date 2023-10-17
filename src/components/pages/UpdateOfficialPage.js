@@ -78,8 +78,8 @@ function UploadOfficialPage() {
     if (!file) return "Preview can't be empty.";
     if (description === '') return "Description can't be empty.";
     for (let i = 0; i < steps.length; i++) {
-      if (steps[i].desc === '' || !steps[i].image)
-        return "Steps fields can't be empty.";
+      if (!steps[i].desc === '' && !steps[i].image)
+        return `At least one field can't be empty at Step ${i + 1}.`;
     }
     return '';
   };

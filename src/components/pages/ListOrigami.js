@@ -44,7 +44,7 @@ function ListOrigami() {
 
   return (
     <Box sx={styles.container}>
-      {loading && <CircularProgress sx={{ margin: '32px' }} size={100} />}
+      {loading && <CircularProgress sx={{ color: '#AFAFAF' }} size={100} />}
       <Box
         display={'flex'}
         width={'100%'}
@@ -62,7 +62,8 @@ function ListOrigami() {
 const styles = {
   container: {
     display: 'flex',
-    justifyContent: 'center',
+    flexDirection: 'column',
+    alignItems: 'center',
     padding: '20px',
     boxSizing: 'border-box',
     width: '100vw',

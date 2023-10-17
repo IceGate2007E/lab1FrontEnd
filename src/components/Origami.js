@@ -1,13 +1,15 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import '@fontsource/lato';
 import { Box } from '@mui/material';
 
 function Origami({ origami, index }) {
+  const navigate = useNavigate();
+
   return (
     <div
       style={{
-        boxShadow: '0px 0px 4px rgba(0,0,0,0.4)',
+        boxShadow: '0px 0px 2px rgba(0,0,0,0.4)',
         width: '360px',
         height: '200px',
         display: 'flex',
@@ -18,7 +20,9 @@ function Origami({ origami, index }) {
         color: 'grey',
         margin: '16px',
         position: 'relative',
+        cursor: 'pointer',
       }}
+      onClick={() => navigate(`/details/${index}`)}
     >
       <Box
         sx={{
@@ -27,15 +31,16 @@ function Origami({ origami, index }) {
           width: '100%',
           position: 'absolute',
           boxSizing: 'border-box',
-          padding: '12px',
+          margin: '12px',
+          padding: '6px',
+          borderRadius: '8px',
+          background: '#FFFA',
+          width: 'fit-content',
+          boxShadow: '0px 0px 4px rgba(0,0,0,0.4)',
+          alignSelf: 'flex-start',
         }}
       >
-        <Link
-          to={'/details/' + index}
-          style={{ textDecoration: 'none', color: 'grey' }}
-        >
-          <span style={{ font: '700 20px Lato' }}>{origami.title}</span>
-        </Link>
+        <span style={{ font: '700 20px Lato' }}>{origami.title}</span>
       </Box>
       <Box
         sx={{
@@ -44,7 +49,13 @@ function Origami({ origami, index }) {
           width: '100%',
           position: 'absolute',
           boxSizing: 'border-box',
-          padding: '12px',
+          margin: '12px',
+          padding: '4px',
+          borderRadius: '8px',
+          background: '#FFFA',
+          width: 'fit-content',
+          boxShadow: '0px 0px 4px rgba(0,0,0,0.4)',
+          alignSelf: 'flex-start',
         }}
       >
         <span style={{ font: '700 18px Lato' }}>

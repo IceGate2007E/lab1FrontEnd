@@ -16,7 +16,7 @@ function Event({ description, entries, thematic, name, index, id, preview }) {
     <Box
       sx={{
         width: '320px',
-        height: '120px',
+        height: 'auto',
         boxShadow: '0px 0px 2px rgba(0,0,0,0.4)',
         display: 'flex',
         flexDirection: 'column',

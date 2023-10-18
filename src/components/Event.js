@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import api from './api/api';
 import { enqueueSnackbar } from 'notistack';
 
-function Event({ description, entries, thematic, name, index, id }) {
+function Event({ description, entries, thematic, name, index, id, preview }) {
   const navigate = useNavigate();
   const [hover, setHover] = React.useState(false);
   const handleFinish = () => {
@@ -46,6 +46,13 @@ function Event({ description, entries, thematic, name, index, id }) {
           Finish
         </Box>
       )}
+      <img
+        style={{
+          maxHeight: '174px',
+          maxWidth: '310px',
+        }}
+        src={'data:image/png;base64,' + preview}
+      />
       <span>{name}</span>
       <span>Thematic: {thematic}</span>
       <span>

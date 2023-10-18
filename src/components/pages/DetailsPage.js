@@ -5,6 +5,7 @@ import { Link, useParams } from 'react-router-dom';
 import ReactPlayer from 'react-player';
 import InputText from '../input/InputText';
 import { enqueueSnackbar } from 'notistack';
+import { CompleteIcon } from '../icons/CompleteIcon';
 
 function DetailsPage() {
   const [origami, setOrigami] = React.useState(null);
@@ -52,7 +53,7 @@ function DetailsPage() {
           }}
         >
           <Box sx={{ font: '700 32px Lato', alignSelf: 'center' }}>
-            {origami.title}
+            {origami.title} {origami.official && <CompleteIcon size='24' />}
           </Box>
           <Box sx={{ font: '500 18px Lato', alignSelf: 'center' }}>
             by {origami.author || 'Anonymous'}

@@ -136,6 +136,13 @@ function EventDetails() {
                 span: { textAlign: 'center' },
               }}
             >
+              <img
+                style={{
+                  maxHeight: '174px',
+                  maxWidth: '310px',
+                }}
+                src={'data:image/png;base64,' + event.preview}
+              />
               <span>
                 <strong>Thematic:</strong> {event.thematic}
               </span>

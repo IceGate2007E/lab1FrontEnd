@@ -42,7 +42,7 @@ function Origami({ origami, index }) {
         }}
       >
         <span style={{ font: '700 20px Lato' }}>
-          {origami.title} {origami.isOfficial && <CompleteIcon size='18xp' />}
+          {origami.title} {origami.official && <CompleteIcon size='18xp' />}
         </span>
       </Box>
       <Box

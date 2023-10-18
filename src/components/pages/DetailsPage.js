@@ -27,13 +27,10 @@ function DetailsPage() {
   const handleComment = () => {
     setSending(true);
     let user = JSON.parse(localStorage.getItem('orukami_user'));
-    api.sendComment(chat, user.userId, origami.id, () => {
+    api.sendComment(chat, user.userId, origami.id, (res) => {
       setOrigami({
         ...origami,
-        comments: [
-          ...origami.comments,
-          { author: user.username, text: chat, date: '' },
-        ],
+        comments: res,
       });
       setChat('');
       setSending(false);

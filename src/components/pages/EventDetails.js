@@ -55,7 +55,7 @@ function EventDetails() {
     setState({ ...state, preview: file });
   };
 
-  const insideDragAndDrop = state.file ? (
+  const insideDragAndDrop = state.preview ? (
     <div
       style={{
         width: '100%',
@@ -73,7 +73,7 @@ function EventDetails() {
     >
       <div style={{ display: 'flex', alignItems: 'center', width: 'inherit' }}>
         <CompleteIcon />
-        {state.file.name}
+        {state.preview.name}
       </div>
     </div>
   ) : (

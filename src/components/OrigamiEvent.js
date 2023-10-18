@@ -4,11 +4,12 @@ import '@fontsource/lato';
 import { Box, ButtonBase } from '@mui/material';
 import api from './api/api';
 
-function OrigamiEvent({ origami, hasVoted, setVote }) {
+function OrigamiEvent({ origami, hasVoted, setVote, eventId }) {
   const navigate = useNavigate();
 
   const handleVote = () => {
-    api.voteOrigami(origami.id, () => {
+    let user = JSON.parse(localStorage('orukami_user'));
+    api.voteOrigami(origami.id, user.userId, eventId, () => {
       setVote();
     });
   };

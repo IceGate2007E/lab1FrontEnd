@@ -68,8 +68,13 @@ const postOrigamiEvent = (body, eventId, userId, onSuccess) => {
   );
 };
 
-const voteOrigami = (id, onSuccess) => {
-  _fetch(`/voteOrigami/${id}`, onSuccess, console.log, 'POST');
+const voteOrigami = (origamiId, userId, eventId, onSuccess) => {
+  _fetch(
+    `/voteOrigami/${origamiId}/${userId}/${eventId}`,
+    onSuccess,
+    console.log,
+    'POST'
+  );
 };
 
 const sendComment = (text, userId, origamiId, onSuccess) => {

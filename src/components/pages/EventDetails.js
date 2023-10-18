@@ -202,6 +202,7 @@ function EventDetails() {
             >
               {event.origamis.map((origami) => (
                 <OrigamiEvent
+                  eventId={event.id}
                   origami={origami}
                   hasVoted={event.hasVoted}
                   setVote={() => setEvent({ ...event, hasVoted: true })}

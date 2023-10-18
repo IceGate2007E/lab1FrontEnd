@@ -38,7 +38,6 @@ function Event({
         cursor: 'pointer',
         position: 'relative',
       }}
-      onMouseDown={(e) => e.stoppropagation()}
       onClick={() => navigate('/events/' + id)}
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}

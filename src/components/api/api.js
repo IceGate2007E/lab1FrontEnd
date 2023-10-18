@@ -84,6 +84,10 @@ const sendComment = (text, userId, origamiId, onSuccess) => {
   });
 };
 
+const finishEvent = (eventId, onSuccess) => {
+  _fetch(`/finishEvent/${eventId}`, onSuccess, console.log, 'POST');
+};
+
 const api = {
   postAuth,
   postSignup,
@@ -99,6 +103,7 @@ const api = {
   postOrigamiEvent,
   voteOrigami,
   sendComment,
+  finishEvent,
 };
 
 export default api;

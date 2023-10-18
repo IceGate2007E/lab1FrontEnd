@@ -10,6 +10,25 @@ import { FileUploader } from 'react-drag-drop-files';
 import { enqueueSnackbar } from 'notistack';
 import OrigamiEvent from '../OrigamiEvent';
 
+function convertImageToBase64(file, callback) {
+  let reader = new FileReader();
+  reader.onloadend = () => {
+    callback(reader.result);
+  };
+  reader.readAsDataURL(file);
+}
+
+function convertImage(file) {
+  return new Promise((resolve, reject) => {
+    let reader = new FileReader();
+    reader.onloadend = () => {
+      resolve(reader.result);
+    };
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+}
+
 function EventDetails() {
   const [event, setEvent] = React.useState(null);
   const { id } = useParams();
@@ -20,8 +39,9 @@ function EventDetails() {
   const [state, setState] = React.useState({
     name: '',
     description: '',
-    preview: null,
   });
+
+  const [file, setFile] = React.useState(null);
 
   React.useEffect(() => {
     if (fetchRef.current) return;
@@ -40,22 +60,32 @@ function EventDetails() {
     if (event.registered)
       api.leaveEvent(event.id, user.userId, () => {
         setSending(false);
+        setEvent({ ...event, registered: false });
         enqueueSnackbar('You leave the event.', { variant: 'info' });
       });
     else
-      api.postOrigamiEvent(state, event.id, user.userId, () => {
-        setSending(false);
-        enqueueSnackbar('Origami uploaded successfully.', {
-          variant: 'success',
-        });
+      convertImageToBase64(file, (res) => {
+        api.postOrigamiEvent(
+          { ...state, preview: res.split(',')[1] },
+          event.id,
+          user.userId,
+          () => {
+            setSending(false);
+            setEvent({ ...event, registered: true });
+            setFile(null);
+            enqueueSnackbar('Origami uploaded successfully.', {
+              variant: 'success',
+            });
+          }
+        );
       });
   };
 
   const handlePreviewFile = (file) => {
-    setState({ ...state, preview: file });
+    setFile(file);
   };
 
-  const insideDragAndDrop = state.preview ? (
+  const insideDragAndDrop = file ? (
     <div
       style={{
         width: '100%',
@@ -73,7 +103,7 @@ function EventDetails() {
     >
       <div style={{ display: 'flex', alignItems: 'center', width: 'inherit' }}>
         <CompleteIcon />
-        {state.preview.name}
+        {file.name}
       </div>
     </div>
   ) : (

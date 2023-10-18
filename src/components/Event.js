@@ -27,9 +27,7 @@ function Event({ description, entries, thematic, name, index, id }) {
         cursor: 'pointer',
         position: 'relative',
       }}
-      onClick={() => {
-        if (!hover) navigate('/events/' + id);
-      }}
+      onClick={() => navigate('/events/' + id)}
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
     >

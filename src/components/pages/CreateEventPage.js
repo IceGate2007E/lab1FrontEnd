@@ -51,7 +51,7 @@ function CreateEventPage() {
   return (
     <Box sx={styles.container}>
       <Box sx={styles.form} marginTop='32px'>
-        <span>name:</span>
+        <span>Title:</span>
         <InputText
           value={state['name']}
           onChange={(e) => setState({ ...state, name: e.target.value })}

@@ -187,7 +187,7 @@ function EventDetails() {
                 <strong>Status:</strong> {event.status}
               </span>
 
-              {!event.registered && (
+              {!event.registered && event.status !== 'Finished' && (
                 <Box
                   sx={{
                     display: 'flex',

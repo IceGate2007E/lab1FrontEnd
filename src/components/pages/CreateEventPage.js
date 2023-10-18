@@ -8,12 +8,17 @@ import { enqueueSnackbar } from 'notistack';
 import { RedoOutlined } from '@mui/icons-material';
 
 function CreateEventPage() {
+  const today = new Date();
+  const tenDaysLater = new Date(today);
+  tenDaysLater.setDate(today.getDate() + 9);
+
   const [loading, setLoading] = React.useState(false);
   const [state, setState] = React.useState({
     name: '',
     description: '',
     entries: 50,
     thematic: '',
+    endDate: tenDaysLater.toISOString().split('T')[0],
   });
 
   const validateEvent = () => {
@@ -27,8 +32,9 @@ function CreateEventPage() {
     setLoading(true);
     let warning = validateEvent();
     if (warning) enqueueSnackbar(warning, { variant: 'error' });
-    else
-      api.postCreateEvent(state, () => {
+    else {
+      let user = JSON.parse(localStorage.getItem('orukami_user'));
+      api.postCreateEvent({ ...state, userId: user.id }, () => {
         enqueueSnackbar('Event created successfully.', { variant: 'success' });
         setLoading(false);
         setState({
@@ -36,14 +42,16 @@ function CreateEventPage() {
           description: '',
           entries: 50,
           thematic: '',
+          endDate: tenDaysLater.toISOString().split('T')[0],
         });
       });
+    }
   };
 
   return (
     <Box sx={styles.container}>
       <Box sx={styles.form} marginTop='32px'>
-        <span>Title:</span>
+        <span>name:</span>
         <InputText
           value={state['name']}
           onChange={(e) => setState({ ...state, name: e.target.value })}
@@ -60,6 +68,12 @@ function CreateEventPage() {
           onChange={(e) =>
             setState({ ...state, entries: Math.max(10, e.target.value) })
           }
+        />
+        <span>Finish Date:</span>
+        <InputText
+          type='date'
+          value={state.endDate}
+          onChange={(e) => setState({ ...state, endDate: e.target.value })}
         />
         <span>Description:</span>
         <Textarea

@@ -50,6 +50,28 @@ const getEvents = (onSuccess) => {
   _fetch('/getEvents', onSuccess, console.log);
 };
 
+const getEventById = (eventId, userId, onSuccess) => {
+  _fetch(`/getEventById/${eventId}/${userId}`, onSuccess, console.log, 'GET');
+};
+
+const leaveEvent = (eventId, userId, onSuccess) => {
+  _fetch(`/leaveEvent/${eventId}/${userId}`, onSuccess, console.log, 'POST');
+};
+
+const postOrigamiEvent = (body, eventId, userId, onSuccess) => {
+  _fetch(
+    `/leaveEvent/${eventId}/${userId}`,
+    onSuccess,
+    console.log,
+    'POST',
+    body
+  );
+};
+
+const voteOrigami = (id, onSuccess) => {
+  _fetch(`/voteOrigami/${id}`, onSuccess, console.log, 'POST');
+};
+
 const api = {
   postAuth,
   postSignup,
@@ -60,6 +82,10 @@ const api = {
   getMostRecentOrigamis,
   getCategoriesOrigami,
   getEvents,
+  getEventById,
+  leaveEvent,
+  postOrigamiEvent,
+  voteOrigami,
 };
 
 export default api;

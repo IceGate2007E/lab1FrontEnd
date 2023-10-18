@@ -2,7 +2,7 @@ import { Box } from '@mui/material';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-function Event({ description, entries, thematic, name, index }) {
+function Event({ description, entries, thematic, name, index, id }) {
   const navigate = useNavigate();
   return (
     <Box
@@ -18,7 +18,7 @@ function Event({ description, entries, thematic, name, index }) {
         borderRadius: '24px',
         cursor: 'pointer',
       }}
-      onClick={() => navigate('/events/' + index)}
+      onClick={() => navigate('/events/' + id)}
     >
       <span>{name}</span>
       <span>Thematic: {thematic}</span>

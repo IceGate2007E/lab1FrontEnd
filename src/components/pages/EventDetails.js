@@ -3,21 +3,96 @@ import React, { useRef } from 'react';
 import api from '../api/api';
 import { Link, useParams } from 'react-router-dom';
 import ReactPlayer from 'react-player';
+import InputText from '../input/InputText';
+import { Textarea } from '@mui/joy';
+import { CompleteIcon } from '../icons/CompleteIcon';
+import { FileUploader } from 'react-drag-drop-files';
+import { enqueueSnackbar } from 'notistack';
+import OrigamiEvent from '../OrigamiEvent';
 
 function EventDetails() {
   const [event, setEvent] = React.useState(null);
   const { id } = useParams();
   const [loading, setLoading] = React.useState(true);
   const fetchRef = useRef(null);
+  const [sending, setSending] = React.useState(false);
+
+  const [state, setState] = React.useState({
+    title: '',
+    description: '',
+    preview: null,
+  });
 
   React.useEffect(() => {
     if (fetchRef.current) return;
     fetchRef.current = true;
-    api.getEvents((res) => {
-      setEvent(res[id]);
+    let user = JSON.parse(localStorage.getItem('orukami_user'));
+    api.getEventById(id, user.id, (res) => {
+      setEvent(res);
       setLoading(false);
     });
   }, []);
+
+  const handleEvent = () => {
+    setSending(true);
+    let user = JSON.parse(localStorage.getItem('orukami_user'));
+    if (event.registered)
+      api.leaveEvent(event.id, user.id, () => {
+        setSending(false);
+        enqueueSnackbar('You leave the event.', { variant: 'info' });
+      });
+    else
+      api.postOrigamiEvent(state, event.id, user.id, () => {
+        setSending(false);
+        enqueueSnackbar('Origami uploaded successfully.', {
+          variant: 'success',
+        });
+      });
+  };
+
+  const handlePreviewFile = (file) => {
+    setState({ ...state, preview: file });
+  };
+
+  const insideDragAndDrop = state.file ? (
+    <div
+      style={{
+        width: '100%',
+        height: '80px',
+        boxShadow: '0px 0px 4px rgba(0,0,1,0.2)',
+        textAlign: 'center',
+        display: 'flex',
+        alignItems: 'center',
+        padding: '24px',
+        boxSizing: 'border-box',
+        borderRadius: '24px',
+        justifyContent: 'center',
+        cursor: 'pointer',
+      }}
+    >
+      <div style={{ display: 'flex', alignItems: 'center', width: 'inherit' }}>
+        <CompleteIcon />
+        {state.file.name}
+      </div>
+    </div>
+  ) : (
+    <div
+      style={{
+        cursor: 'pointer',
+        width: '100%',
+        height: '80px',
+        boxShadow: '0px 0px 4px rgba(0,0,1,0.2)',
+        textAlign: 'center',
+        display: 'flex',
+        alignItems: 'center',
+        padding: '24px',
+        borderRadius: '24px',
+        boxSizing: 'border-box',
+      }}
+    >
+      <span>Drag and drop, or click here to upload a file</span>
+    </div>
+  );
 
   return (
     <Box sx={styles.container}>
@@ -56,17 +131,66 @@ function EventDetails() {
                 flex: 2,
                 color: 'black',
                 strong: { color: '#AFAFAF', fontWeight: 500 },
-                gap: '4px',
-                img: {},
+                gap: '6px',
+                span: { textAlign: 'center' },
               }}
             >
               <span>
                 <strong>Thematic:</strong> {event.thematic}
               </span>
               <span>
-                <strong>Entries:</strong> {event.entries} / {event.entries}
+                <strong>Entries:</strong>{' '}
+                {event.entries - event.remainingEntries} / {event.entries}
               </span>
-              <Button sx={styles.button}>JOIN</Button>
+              <span style={{ font: '300 14px Lato', marginTop: '20px' }}>
+                {!event.registered ? 'Join the event.' : 'Drop out.'}
+              </span>
+              <Button
+                sx={styles.button}
+                onClick={() => handleEvent()}
+                disabled={sending}
+              >
+                {!event.registered ? 'Upload' : 'Leave'}
+              </Button>
+              {!event.registered && (
+                <Box
+                  sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    width: '100%',
+                    gap: '8px',
+                  }}
+                >
+                  <span>Title:</span>
+                  <InputText
+                    value={state['title']}
+                    onChange={(e) =>
+                      setState({ ...state, title: e.target.value })
+                    }
+                  />
+                  <span>Description:</span>
+                  <Textarea
+                    value={state['description']}
+                    onChange={(e) =>
+                      setState({ ...state, description: e.target.value })
+                    }
+                    sx={{
+                      border: 'none',
+                      boxShadow: '0px 0px 4px rgba(0,0,1,0.2)',
+                      width: '100%',
+                    }}
+                    minRows={3}
+                  />
+                  <span>Image:</span>
+                  <FileUploader
+                    types={['JPG', 'PNG', 'JPEG']}
+                    handleChange={handlePreviewFile}
+                    name='file'
+                    children={insideDragAndDrop}
+                  />
+                </Box>
+              )}
             </Box>
             <Box
               sx={{
@@ -74,7 +198,15 @@ function EventDetails() {
                 flexWrap: 'wrap',
                 flex: 5,
               }}
-            ></Box>
+            >
+              {event.origamis.map((origami) => (
+                <OrigamiEvent
+                  origami={origami}
+                  hasVoted={event.hasVoted}
+                  setVote={() => setEvent({ ...event, hasVoted: true })}
+                />
+              ))}
+            </Box>
           </Box>
         </Box>
       )}
@@ -97,7 +229,6 @@ const styles = {
     borderRadius: '48px',
     color: 'white',
     font: '700 18px Lato',
-    margin: '24px',
     padding: '12px 32px',
     width: '160px',
     textTransform: 'none',

@@ -50,7 +50,14 @@ function UserRoutes() {
         <Route path='/uploadOrigami' element={<UploadOrigamiPage />} />
         <Route path='/search' element={<SearchPage />} />
         <Route path='/events' element={<EventsPage />} />
-        <Route path='/*' element={<h1>Error</h1>} />
+        <Route
+          path='/*'
+          element={
+            <div style={{ display: 'flex', justifyContent: 'center' }}>
+              <h1>Error, page not found.</h1>
+            </div>
+          }
+        />
       </Routes>
     </>
   );

@@ -93,6 +93,7 @@ function UploadOfficialPage() {
     } else {
       let images = [];
       let steps_desc = [];
+      let user = JSON.parse(localStorage.getItem('orukami_user'));
 
       Promise.all(
         steps.map((s) =>
@@ -115,6 +116,7 @@ function UploadOfficialPage() {
               difficulty: difficulty,
               type: type,
               estimatedTime: time,
+              userId: user.id,
             },
             () => {
               enqueueSnackbar('Origami created successfully.', {
@@ -136,6 +138,7 @@ function UploadOfficialPage() {
   const insideDragAndDrop = file ? (
     <div
       style={{
+        cursor: 'pointer',
         width: '320px',
         height: '60px',
         boxShadow: '0px 0px 4px rgba(0,0,1,0.2)',
@@ -156,6 +159,7 @@ function UploadOfficialPage() {
   ) : (
     <div
       style={{
+        cursor: 'pointer',
         width: '320px',
         height: '60px',
         boxShadow: '0px 0px 4px rgba(0,0,1,0.2)',

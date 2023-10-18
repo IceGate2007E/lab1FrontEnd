@@ -8,6 +8,7 @@ function Step({ step, index, onChange }) {
   const insideDragAndDrop = step.image ? (
     <div
       style={{
+        cursor: 'pointer',
         width: '320px',
         height: '60px',
         boxShadow: '0px 0px 4px rgba(0,0,1,0.2)',
@@ -28,6 +29,7 @@ function Step({ step, index, onChange }) {
   ) : (
     <div
       style={{
+        cursor: 'pointer',
         width: '320px',
         height: '60px',
         boxShadow: '0px 0px 4px rgba(0,0,1,0.2)',

@@ -16,16 +16,8 @@ const postOrigami = (body, onSuccess, onFailure) => {
   _fetch('/origami/create', onSuccess, onFailure, 'POST', body);
 };
 
-const getEvents = () => {
-  _fetch(
-    '/event/get/all',
-    (res) => console.log(res),
-    () => {}
-  );
-};
-
 const postCreateEvent = (body, onSuccess) => {
-  _fetch('/', onSuccess, () => {}, 'POST', body);
+  _fetch('/event/create', onSuccess, () => {}, 'POST', body);
 };
 
 const _fetch = (path, onSuccess, onFailure, method = 'GET', body) => {
@@ -54,6 +46,10 @@ const getCategoriesOrigami = (onSuccess) => {
   _fetch('/getOrigamisCategory', onSuccess, console.log);
 };
 
+const getEvents = (onSuccess) => {
+  _fetch('/getEvents', onSuccess, console.log);
+};
+
 const api = {
   postAuth,
   postSignup,
@@ -63,6 +59,7 @@ const api = {
   getOrigamis,
   getMostRecentOrigamis,
   getCategoriesOrigami,
+  getEvents,
 };
 
 export default api;

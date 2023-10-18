@@ -32,8 +32,8 @@ function HomePage() {
     if (fetchRef.current) return;
     fetchRef.current = true;
     api.getMostRecentOrigamis((res) => {
-      setMostRecent(res);
       api.getCategoriesOrigami((r) => {
+        setMostRecent(res);
         setCategories(r);
         setLoading(false);
       });

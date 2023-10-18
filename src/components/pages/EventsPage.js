@@ -1,11 +1,35 @@
-import { Box } from '@mui/material';
-import React from 'react';
+import { Box, CircularProgress } from '@mui/material';
+import React, { useRef } from 'react';
+import api from '../api/api';
+import Event from '../Event';
 
 function EventsPage() {
+  const [data, setData] = React.useState([]);
+  const [loading, setLoading] = React.useState(true);
+  const fetchRef = useRef(null);
+
+  React.useEffect(() => {
+    if (fetchRef.current) return;
+    fetchRef.current = true;
+    api.getEvents((res) => {
+      setData(res);
+      setLoading(false);
+    });
+  }, []);
   return (
     <Box sx={styles.container}>
-      <h1 style={{ color: 'grey', fontFamily: 'Lato' }}>Events</h1>
-      <span style={{ font: '500 16px Lato' }}>Compite with others users!</span>
+      {loading && <CircularProgress sx={{ color: '#AFAFAF' }} size={100} />}
+      <Box
+        display={'flex'}
+        width={'100%'}
+        flexWrap={'wrap'}
+        justifyContent={'center'}
+        gap={'24px'}
+      >
+        {data.map((event, i) => {
+          return <Event {...event} index={i} />;
+        })}
+      </Box>
     </Box>
   );
 }
@@ -15,6 +39,9 @@ const styles = {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
+    padding: '20px',
+    boxSizing: 'border-box',
+    width: '100vw',
   },
   select: {
     width: '160px',

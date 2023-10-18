@@ -19,6 +19,7 @@ import UploadOfficialPage from './components/pages/UpdateOfficialPage';
 import ListOrigami from './components/pages/ListOrigami';
 import DetailsPage from './components/pages/DetailsPage';
 import HomePage from './components/pages/HomePage';
+import EventDetails from './components/pages/EventDetails';
 
 function App() {
   return (
@@ -64,7 +65,9 @@ function AdminRoutes() {
         <Route path='/createOrigami' element={<UploadOfficialPage />} />
         <Route path='/createEvent' element={<CreateEventPage />} />
         <Route path='/listOrigami' element={<ListOrigami />} />
+        <Route path='/listEvents' element={<EventsPage />} />
         <Route path='/details/:id' element={<DetailsPage />} />
+        <Route path='/events/:id' element={<EventDetails />} />
         <Route
           path='/*'
           element={

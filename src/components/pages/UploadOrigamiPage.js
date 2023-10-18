@@ -12,6 +12,7 @@ import { Category } from '../icons/Category';
 import { Textarea } from '@mui/joy';
 import Step from '../Step';
 import ReactPlayer from 'react-player';
+import { enqueueSnackbar } from 'notistack';
 
 function convertImageToBase64(file, callback) {
   let reader = new FileReader();
@@ -45,33 +46,65 @@ function UploadOrigamiPage() {
     setFile(file);
   };
   const [file, setFile] = React.useState();
+  const [loading, setLoading] = React.useState(false);
+
+  const validateOrigami = () => {
+    if (title === '') return "Title can't be empty.";
+    if (!file) return "Preview can't be empty.";
+    if (description === '') return "Description can't be empty.";
+    for (let i = 0; i < steps.length; i++) {
+      if (!steps[i].desc || ('' && !steps[i].image))
+        return `Steps fields can\'t be empty.`;
+    }
+    return '';
+  };
 
   const handleUpload = () => {
+    setLoading(true);
     let images = [];
     let steps_desc = [];
     let user = JSON.parse(localStorage.getItem('orukami_user'));
-
-    Promise.all(
-      steps.map((s) =>
-        convertImage(s.image).then((res) => {
-          images.push(res.split(',')[1]);
-          steps_desc.push(s.desc);
-        })
-      )
-    ).then(() => {
-      convertImageToBase64(file, (res) => {
-        api.postOrigami({
-          category: category,
-          title: title,
-          description: description,
-          preview: res.split(',')[1],
-          images: images,
-          steps: steps_desc,
-          videoURL: videoURL,
-          userId: user.userId,
+    let warning = validateOrigami();
+    if (warning) {
+      enqueueSnackbar(warning, { variant: 'error' });
+      setLoading(false);
+    } else {
+      Promise.all(
+        steps.map((s) =>
+          convertImage(s.image).then((res) => {
+            images.push(res.split(',')[1]);
+            steps_desc.push(s.desc);
+          })
+        )
+      ).then(() => {
+        convertImageToBase64(file, (res) => {
+          api.postOrigami(
+            {
+              category: category,
+              title: title,
+              description: description,
+              preview: res.split(',')[1],
+              images: images,
+              steps: steps_desc,
+              videoURL: videoURL,
+              userId: user.userId,
+            },
+            () => {
+              enqueueSnackbar('Origami uploaded succesfully.', {
+                variant: 'success',
+              });
+              setTitle('');
+              setDescription('');
+              setCategory('Other');
+              setVideoURL('');
+              setSteps([{ desc: '', image: null }]);
+              setLoading(false);
+            },
+            console.log
+          );
         });
       });
-    });
+    }
   };
 
   const insideDragAndDrop = file ? (
@@ -248,7 +281,11 @@ function UploadOrigamiPage() {
         </Box>
         <span>(optional)</span>
       </Box>
-      <Button sx={styles.button} onClick={() => handleUpload()}>
+      <Button
+        sx={styles.button}
+        onClick={() => handleUpload()}
+        disabled={loading}
+      >
         Upload
       </Button>
     </Box>

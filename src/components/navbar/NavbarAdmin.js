@@ -5,7 +5,6 @@ const tabs = [
   { title: 'Home', url: '/home' },
   { title: 'Create Origami', url: '/createOrigami' },
   { title: 'List Origami', url: '/listOrigami' },
-  { title: 'Manage Users', url: '/manageUser' },
   { title: 'Create Event', url: '/createEvent' },
   { title: 'List Events', url: '/listEvents' },
 ];

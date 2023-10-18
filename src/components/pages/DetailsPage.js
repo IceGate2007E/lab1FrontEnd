@@ -151,7 +151,7 @@ function DetailsPage() {
                 <span style={{ font: '700 24px Lato' }}>Step: {step + 1}</span>
                 <span style={{ color: 'black' }}>{origami.steps[step]}</span>
                 <img
-                  style={{ maxHeight: '120px' }}
+                  style={{ maxHeight: '360px' }}
                   src={'data:image/png;base64,' + origami.images[step]}
                 />
               </Box>

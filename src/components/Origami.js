@@ -56,7 +56,6 @@ function Origami({ origami, index }) {
           padding: '4px',
           borderRadius: '8px',
           background: '#FFFA',
-          width: 'fit-content',
           boxShadow: '0px 0px 4px rgba(0,0,0,0.4)',
           alignSelf: 'flex-start',
         }}

@@ -84,12 +84,26 @@ function DetailsPage() {
                 style={{ maxHeight: '120px' }}
                 src={'data:image/png;base64,' + origami.preview}
               />
-              <span>
-                <strong>Category:</strong> {origami.category}
-              </span>
-              <span>
-                <strong>Type:</strong> {origami.type}
-              </span>
+              {origami.category && (
+                <span>
+                  <strong>Category:</strong> {origami.category}
+                </span>
+              )}
+              {origami.type && (
+                <span>
+                  <strong>Type:</strong> {origami.type}
+                </span>
+              )}
+              {origami.difficulty && (
+                <span>
+                  <strong>Difficulty:</strong> {origami.difficulty}
+                </span>
+              )}
+              {origami.estimatedTime && (
+                <span>
+                  <strong>Estimated Time:</strong> {origami.estimatedTime}
+                </span>
+              )}
             </Box>
             <Box
               sx={{

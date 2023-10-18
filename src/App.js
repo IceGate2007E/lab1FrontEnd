@@ -48,7 +48,7 @@ function UserRoutes() {
       <Routes>
         <Route path='/home' element={<HomePage />} />
         <Route path='/uploadOrigami' element={<UploadOrigamiPage />} />
-        <Route path='/search' element={<SearchPage />} />
+        <Route path='/search' element={<ListOrigami />} />
         <Route path='/events' element={<EventsPage />} />
         <Route
           path='/*'

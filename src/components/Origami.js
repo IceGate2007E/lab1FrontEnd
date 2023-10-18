@@ -2,6 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import '@fontsource/lato';
 import { Box } from '@mui/material';
+import { CompleteIcon } from './icons/CompleteIcon';
 
 function Origami({ origami, index }) {
   const navigate = useNavigate();
@@ -40,7 +41,9 @@ function Origami({ origami, index }) {
           alignSelf: 'flex-start',
         }}
       >
-        <span style={{ font: '700 20px Lato' }}>{origami.title}</span>
+        <span style={{ font: '700 20px Lato' }}>
+          {origami.title} {origami.isOfficial && <CompleteIcon size='18xp' />}
+        </span>
       </Box>
       <Box
         sx={{

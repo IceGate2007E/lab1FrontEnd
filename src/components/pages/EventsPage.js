@@ -3,7 +3,7 @@ import React, { useRef } from 'react';
 import api from '../api/api';
 import Event from '../Event';
 
-function EventsPage() {
+function EventsPage({ admin = true }) {
   const [data, setData] = React.useState([]);
   const [loading, setLoading] = React.useState(true);
   const fetchRef = useRef(null);
@@ -27,7 +27,7 @@ function EventsPage() {
         gap={'24px'}
       >
         {data.map((event, i) => {
-          return <Event {...event} index={i} />;
+          return <Event {...event} index={i} admin={admin} />;
         })}
       </Box>
     </Box>

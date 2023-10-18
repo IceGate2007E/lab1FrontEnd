@@ -37,7 +37,7 @@ function EventDetails() {
   const [sending, setSending] = React.useState(false);
 
   const [state, setState] = React.useState({
-    name: '',
+    title: '',
     description: '',
   });
 
@@ -201,7 +201,7 @@ function EventDetails() {
                   <InputText
                     value={state['title']}
                     onChange={(e) =>
-                      setState({ ...state, name: e.target.value })
+                      setState({ ...state, title: e.target.value })
                     }
                   />
                   <span>Description:</span>

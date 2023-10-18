@@ -13,6 +13,7 @@ function Event({
   id,
   preview,
   remainingEntries,
+  admin,
 }) {
   const navigate = useNavigate();
   const [hover, setHover] = React.useState(false);
@@ -40,7 +41,7 @@ function Event({
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
     >
-      {hover && (
+      {hover && admin && (
         <Box
           sx={{
             position: 'absolute',

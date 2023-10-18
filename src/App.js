@@ -51,6 +51,7 @@ function UserRoutes() {
         <Route path='/search' element={<ListOrigami />} />
         <Route path='/events' element={<EventsPage admin={false} />} />
         <Route path='/details/:id' element={<DetailsPage />} />
+        <Route path='/events/:id' element={<EventDetails />} />
         <Route
           path='/*'
           element={

@@ -180,6 +180,12 @@ function EventDetails() {
                 <strong>Entries:</strong>{' '}
                 {event.entries - event.remainingEntries} / {event.entries}
               </span>
+              <span>
+                <strong>End Date:</strong> {event.endDate}
+              </span>
+              <span>
+                <strong>Status:</strong> {event.status}
+              </span>
 
               {!event.registered && (
                 <Box

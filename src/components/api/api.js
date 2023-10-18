@@ -72,6 +72,13 @@ const voteOrigami = (id, onSuccess) => {
   _fetch(`/voteOrigami/${id}`, onSuccess, console.log, 'POST');
 };
 
+const sendComment = (text, userId, origamiId, onSuccess) => {
+  _fetch(`/saveComment/${origamiId}`, onSuccess, console.log, 'POST', {
+    text: text,
+    userId: userId,
+  });
+};
+
 const api = {
   postAuth,
   postSignup,
@@ -86,6 +93,7 @@ const api = {
   leaveEvent,
   postOrigamiEvent,
   voteOrigami,
+  sendComment,
 };
 
 export default api;

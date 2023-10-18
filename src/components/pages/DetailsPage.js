@@ -1,8 +1,10 @@
-import { Box, ButtonBase, CircularProgress } from '@mui/material';
+import { Box, Button, ButtonBase, CircularProgress } from '@mui/material';
 import React, { useRef } from 'react';
 import api from '../api/api';
 import { Link, useParams } from 'react-router-dom';
 import ReactPlayer from 'react-player';
+import InputText from '../input/InputText';
+import { enqueueSnackbar } from 'notistack';
 
 function DetailsPage() {
   const [origami, setOrigami] = React.useState(null);
@@ -10,6 +12,8 @@ function DetailsPage() {
   const [loading, setLoading] = React.useState(true);
   const fetchRef = useRef(null);
   const [step, setStep] = React.useState(0);
+  const [chat, setChat] = React.useState('');
+  const [sending, setSending] = React.useState(false);
 
   React.useEffect(() => {
     if (fetchRef.current) return;
@@ -19,6 +23,23 @@ function DetailsPage() {
       setLoading(false);
     });
   }, []);
+
+  const handleComment = () => {
+    setSending(true);
+    let user = JSON.parse(localStorage.getItem('orukami_user'));
+    api.sendComment(chat, user.userId, origami.id, () => {
+      setOrigami({
+        ...origami,
+        comments: [
+          ...origami.comments,
+          { author: user.username, text: chat, date: '' },
+        ],
+      });
+      setChat('');
+      setSending(false);
+      enqueueSnackbar('Your comment was saved.', { variant: 'success' });
+    });
+  };
 
   return (
     <Box sx={styles.container}>
@@ -105,6 +126,7 @@ function DetailsPage() {
                       opacity: 0.4,
                     },
                   }}
+                  onClick={() => setStep(step - 1)}
                   disabled={step === 0}
                 >
                   Prev
@@ -124,6 +146,7 @@ function DetailsPage() {
                     },
                   }}
                   disabled={step + 1 === origami.steps.length}
+                  onClick={() => setStep(step + 1)}
                 >
                   Next
                 </ButtonBase>
@@ -141,6 +164,33 @@ function DetailsPage() {
               <ReactPlayer url={origami.videoURL} controls={true} />
             </Box>
           )}
+          <Box
+            alignSelf={'center'}
+            mt={'30px'}
+            display={'flex'}
+            flexDirection={'column'}
+            width='60%'
+          >
+            {(origami.comments || []).map(({ author, text, date }) => (
+              <Box sx={{ display: 'flex', gap: '10px', width: '100%' }}>
+                {`${author}: ${text}`}
+                <span style={{ marginLeft: 'auto' }}>{date}</span>
+              </Box>
+            ))}
+            <Box sx={{ width: '100%', display: 'flex' }}>
+              <InputText
+                value={chat}
+                onChange={(e) => setChat(e.target.value)}
+              />
+              <Button
+                onClick={() => handleComment()}
+                disabled={sending}
+                sx={styles.button}
+              >
+                Comment
+              </Button>
+            </Box>
+          </Box>
         </Box>
       )}
     </Box>
@@ -155,6 +205,27 @@ const styles = {
     padding: '20px 80px',
     boxSizing: 'border-box',
     width: '100vw',
+  },
+  button: {
+    marginTop: '30px',
+    backgroundColor: 'rgb(252,159,4)',
+    border: '4px solid #FFFFFF',
+    borderRadius: '32px',
+    color: 'white',
+    fontSize: 18,
+    fontWeight: 700,
+    padding: '10px 24px',
+    width: '200px',
+    textTransform: 'none',
+    position: 'relative',
+    '&:hover': {
+      backgroundColor: 'rgb(251,98,5)',
+      border: '4px solid #FFFFFF',
+      color: 'white',
+    },
+    '&:disabled': {
+      color: 'grey',
+    },
   },
 };
 

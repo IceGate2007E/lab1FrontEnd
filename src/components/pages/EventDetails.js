@@ -27,6 +27,7 @@ function EventDetails() {
     if (fetchRef.current) return;
     fetchRef.current = true;
     let user = JSON.parse(localStorage.getItem('orukami_user'));
+    console.log(user);
     api.getEventById(id, user.userId, (res) => {
       setEvent(res);
       setLoading(false);

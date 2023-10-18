@@ -70,6 +70,26 @@ function OrigamiEvent({ origami, hasVoted, setVote, eventId }) {
       </Box>
       <Box
         sx={{
+          bottom: '0px',
+          display: 'flex',
+          width: '100%',
+          position: 'absolute',
+          boxSizing: 'border-box',
+          margin: '12px',
+          padding: '4px',
+          borderRadius: '8px',
+          background: '#FFFA',
+          width: 'fit-content',
+          boxShadow: '0px 0px 4px rgba(0,0,0,0.4)',
+          alignSelf: 'flex-end',
+        }}
+      >
+        <span style={{ font: '700 18px Lato' }}>
+          {`${origami.votes} vote${origami.votes !== 1 ? 's' : ''}`}
+        </span>
+      </Box>
+      <Box
+        sx={{
           top: '0px',
           right: '0px',
           textAlign: 'right',

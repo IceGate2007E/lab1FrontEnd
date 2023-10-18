@@ -14,6 +14,7 @@ function Event({
   preview,
   remainingEntries,
   admin,
+  status,
 }) {
   const navigate = useNavigate();
   const [hover, setHover] = React.useState(false);
@@ -41,21 +42,24 @@ function Event({
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
     >
-      {hover && admin && (
-        <Box
-          sx={{
-            position: 'absolute',
-            top: '20px',
-            right: '20px',
-            background: 'white',
-            color: 'red',
-            cursor: 'pointer',
-          }}
-          onClick={() => handleFinish()}
-        >
-          Finish
-        </Box>
-      )}
+      {hover &&
+        admin &&
+        status !==
+          'Finished'(
+            <Box
+              sx={{
+                position: 'absolute',
+                top: '20px',
+                right: '20px',
+                background: 'white',
+                color: 'red',
+                cursor: 'pointer',
+              }}
+              onClick={() => handleFinish()}
+            >
+              Finish
+            </Box>
+          )}
       <img
         style={{
           maxHeight: '174px',
@@ -68,6 +72,7 @@ function Event({
       <span>
         Entries: {entries - remainingEntries}/{entries}
       </span>
+      <span>Status: {status}</span>
     </Box>
   );
 }

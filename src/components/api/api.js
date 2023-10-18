@@ -1,4 +1,4 @@
-const URL = 'http://localhost:5000';
+const URL = 'http://localhost:8080';
 
 const postAuth = (body, onSuccess, onFailure) => {
   _fetch('/user/login', onSuccess, onFailure, 'POST', body, false);
@@ -9,7 +9,7 @@ const postSignup = (body, onSuccess, onFailure) => {
 };
 
 const getOrigamis = (onSuccess) => {
-  _fetch('/getOrigamis', onSuccess, () => {});
+  _fetch('/origami/all', onSuccess, () => {});
 };
 
 const postOrigami = (body, onSuccess, onFailure) => {
@@ -39,28 +39,28 @@ const _fetch = (path, onSuccess, onFailure, method = 'GET', body) => {
 };
 
 const getMostRecentOrigamis = (onSuccess) => {
-  _fetch('/getOrigamis', onSuccess, console.log);
+  _fetch('/origami/recent', onSuccess, console.log);
 };
 
 const getCategoriesOrigami = (onSuccess) => {
-  _fetch('/getOrigamisCategory', onSuccess, console.log);
+  _fetch('/origami/category', onSuccess, console.log);
 };
 
 const getEvents = (onSuccess) => {
-  _fetch('/getEvents', onSuccess, console.log);
+  _fetch('/event/all', onSuccess, console.log);
 };
 
 const getEventById = (eventId, userId, onSuccess) => {
-  _fetch(`/getEventById/${eventId}/${userId}`, onSuccess, console.log, 'GET');
+  _fetch(`/event/${eventId}/${userId}`, onSuccess, console.log, 'GET');
 };
 
 const leaveEvent = (eventId, userId, onSuccess) => {
-  _fetch(`/leaveEvent/${eventId}/${userId}`, onSuccess, console.log, 'POST');
+  _fetch(`/event/leave/${eventId}/${userId}`, onSuccess, console.log, 'POST');
 };
 
 const postOrigamiEvent = (body, eventId, userId, onSuccess) => {
   _fetch(
-    `/leaveEvent/${eventId}/${userId}`,
+    `/event/add/${eventId}/${userId}`,
     onSuccess,
     console.log,
     'POST',
@@ -70,7 +70,7 @@ const postOrigamiEvent = (body, eventId, userId, onSuccess) => {
 
 const voteOrigami = (origamiId, userId, eventId, onSuccess) => {
   _fetch(
-    `/voteOrigami/${origamiId}/${userId}/${eventId}`,
+    `/event/vote/${eventId}/${userId}/${origamiId}`,
     onSuccess,
     console.log,
     'POST'
@@ -78,7 +78,7 @@ const voteOrigami = (origamiId, userId, eventId, onSuccess) => {
 };
 
 const sendComment = (text, userId, origamiId, onSuccess) => {
-  _fetch(`/saveComment/${origamiId}`, onSuccess, console.log, 'POST', {
+  _fetch(`/origami/comment/${origamiId}`, onSuccess, console.log, 'POST', {
     text: text,
     userId: userId,
   });
@@ -97,7 +97,6 @@ const api = {
   getOrigamis,
   getMostRecentOrigamis,
   getCategoriesOrigami,
-  getEvents,
   getEventById,
   leaveEvent,
   postOrigamiEvent,

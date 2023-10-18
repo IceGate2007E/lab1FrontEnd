@@ -20,7 +20,9 @@ function SearchPage() {
     setType(event.target.value);
   };
 
-  api.getEvents();
+  React.useEffect(() => {
+    api.getEvents();
+  },[])
 
   return (
     <Box sx={styles.container}>

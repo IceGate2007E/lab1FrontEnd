@@ -6,6 +6,16 @@ import api from '../api/api';
 import { Textarea } from '@mui/joy';
 import { enqueueSnackbar } from 'notistack';
 import { RedoOutlined } from '@mui/icons-material';
+import { FileUploader } from 'react-drag-drop-files';
+import { CompleteIcon } from '../icons/CompleteIcon';
+
+function convertImageToBase64(file, callback) {
+  let reader = new FileReader();
+  reader.onloadend = () => {
+    callback(reader.result);
+  };
+  reader.readAsDataURL(file);
+}
 
 function CreateEventPage() {
   const today = new Date();
@@ -21,10 +31,17 @@ function CreateEventPage() {
     endDate: tenDaysLater.toISOString().split('T')[0],
   });
 
+  const [file, setFile] = React.useState(null);
+
+  const handlePreviewFile = (file) => {
+    setFile(file);
+  };
+
   const validateEvent = () => {
     if (state.name === '') return "Title can't be empty.";
     if (state.description === '') return "Description can't be empty.";
     if (state.thematic === '') return "Thematic can't be empty.";
+    if (file === null) return "Preview can't be empty.";
     return '';
   };
 
@@ -34,19 +51,68 @@ function CreateEventPage() {
     if (warning) enqueueSnackbar(warning, { variant: 'error' });
     else {
       let user = JSON.parse(localStorage.getItem('orukami_user'));
-      api.postCreateEvent({ ...state, userId: user.userId }, () => {
-        enqueueSnackbar('Event created successfully.', { variant: 'success' });
-        setLoading(false);
-        setState({
-          name: '',
-          description: '',
-          entries: 50,
-          thematic: '',
-          endDate: tenDaysLater.toISOString().split('T')[0],
-        });
+      convertImageToBase64(file, (res) => {
+        api.postCreateEvent(
+          { ...state, userId: user.userId, preview: res.split(',')[1] },
+          () => {
+            enqueueSnackbar('Event created successfully.', {
+              variant: 'success',
+            });
+            setLoading(false);
+            setState({
+              name: '',
+              description: '',
+              entries: 50,
+              thematic: '',
+              endDate: tenDaysLater.toISOString().split('T')[0],
+            });
+            setFile(null);
+          }
+        );
       });
     }
   };
+
+  const insideDragAndDrop = file ? (
+    <div
+      style={{
+        cursor: 'pointer',
+        width: '320px',
+        height: '60px',
+        boxShadow: '0px 0px 4px rgba(0,0,1,0.2)',
+        textAlign: 'center',
+        display: 'flex',
+        alignItems: 'center',
+        padding: '24px',
+        boxSizing: 'border-box',
+        borderRadius: '24px',
+        justifyContent: 'center',
+      }}
+    >
+      <div style={{ display: 'flex', alignItems: 'center' }}>
+        <CompleteIcon />
+        {file.name}
+      </div>
+    </div>
+  ) : (
+    <div
+      style={{
+        cursor: 'pointer',
+        width: '320px',
+        height: '60px',
+        boxShadow: '0px 0px 4px rgba(0,0,1,0.2)',
+        textAlign: 'center',
+        display: 'flex',
+        alignItems: 'center',
+        padding: '24px',
+        borderRadius: '24px',
+        boxSizing: 'border-box',
+        justifyContent: 'center',
+      }}
+    >
+      <span>Drag and drop, or click here to upload a file</span>
+    </div>
+  );
 
   return (
     <Box sx={styles.container}>
@@ -85,6 +151,13 @@ function CreateEventPage() {
             width: '100%',
           }}
           minRows={3}
+        />
+        <span></span>
+        <FileUploader
+          types={['JPG', 'PNG', 'JPEG']}
+          handleChange={handlePreviewFile}
+          name='file'
+          children={insideDragAndDrop}
         />
       </Box>
       <Button

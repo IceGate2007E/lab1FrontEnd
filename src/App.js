@@ -50,6 +50,7 @@ function UserRoutes() {
         <Route path='/uploadOrigami' element={<UploadOrigamiPage />} />
         <Route path='/search' element={<ListOrigami />} />
         <Route path='/events' element={<EventsPage />} />
+        <Route path='/details/:id' element={<DetailsPage />} />
         <Route
           path='/*'
           element={

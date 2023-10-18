@@ -49,6 +49,7 @@ function UploadOrigamiPage() {
   const handleUpload = () => {
     let images = [];
     let steps_desc = [];
+    let user = JSON.parse(localStorage.getItem('orukami_user'));
 
     Promise.all(
       steps.map((s) =>
@@ -67,6 +68,7 @@ function UploadOrigamiPage() {
           images: images,
           steps: steps_desc,
           videoURL: videoURL,
+          userId: user.userId,
         });
       });
     });

@@ -1,4 +1,4 @@
-const URL = 'http://localhost:8080';
+const URL = 'http://localhost:5000';
 
 const postAuth = (body, onSuccess, onFailure) => {
   _fetch('/user/login', onSuccess, onFailure, 'POST', body, false);

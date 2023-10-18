@@ -10,9 +10,9 @@ function ListOrigami() {
   const [loading, setLoading] = React.useState(false);
 
   const [title, setTitle] = React.useState('');
-  const [category, setCategory] = React.useState('Other');
+  const [category, setCategory] = React.useState('All');
   const [difficulty, setDifficulty] = React.useState('All');
-  const [type, setType] = React.useState('Common');
+  const [type, setType] = React.useState('All');
 
   const handleChange = (event) => {
     setCategory(event.target.value);
@@ -28,9 +28,9 @@ function ListOrigami() {
     setLoading(true);
     let body = {
       title: title,
-      difficulty: difficulty === 'All' ? '' : difficulty,
-      category: category === 'All' ? '' : category,
-      type: type === 'All' ? '' : type,
+      difficulty: difficulty === 'All' ? null : difficulty,
+      category: category === 'All' ? null : category,
+      type: type === 'All' ? null : type,
     };
     api.filterOrigami(body, (res) => {
       setData(res);

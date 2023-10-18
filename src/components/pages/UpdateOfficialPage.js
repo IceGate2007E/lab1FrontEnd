@@ -278,7 +278,7 @@ function UploadOfficialPage() {
               },
             }}
           >
-            {['All', 'Easy', 'Medium', 'Hard'].map((cat, i) => (
+            {['Easy', 'Medium', 'Hard'].map((cat, i) => (
               <MenuItem value={cat} key={i}>
                 {cat}
               </MenuItem>

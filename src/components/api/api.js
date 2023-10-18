@@ -88,6 +88,10 @@ const finishEvent = (eventId, onSuccess) => {
   _fetch(`/finishEvent/${eventId}`, onSuccess, console.log, 'POST');
 };
 
+const filterOrigami = (body, onSuccess) => {
+  _fetch('/filterOrigami', onSuccess, console.log, 'POST', body);
+};
+
 const api = {
   postAuth,
   postSignup,
@@ -103,6 +107,7 @@ const api = {
   voteOrigami,
   sendComment,
   finishEvent,
+  filterOrigami,
 };
 
 export default api;

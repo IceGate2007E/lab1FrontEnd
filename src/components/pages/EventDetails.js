@@ -18,7 +18,7 @@ function EventDetails() {
   const [sending, setSending] = React.useState(false);
 
   const [state, setState] = React.useState({
-    title: '',
+    name: '',
     description: '',
     preview: null,
   });
@@ -109,7 +109,7 @@ function EventDetails() {
           }}
         >
           <Box sx={{ font: '700 32px Lato', alignSelf: 'center' }}>
-            {event.title}
+            {event.name}
           </Box>
           <Box sx={{ font: '500 18px Lato', alignSelf: 'center' }}>
             by {event.author || 'Anonymous'}
@@ -167,7 +167,7 @@ function EventDetails() {
                   <InputText
                     value={state['title']}
                     onChange={(e) =>
-                      setState({ ...state, title: e.target.value })
+                      setState({ ...state, name: e.target.value })
                     }
                   />
                   <span>Description:</span>

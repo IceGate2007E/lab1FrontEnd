@@ -224,18 +224,18 @@ function EventDetails() {
                     name='file'
                     children={insideDragAndDrop}
                   />
-                  <span style={{ font: '300 14px Lato', marginTop: '20px' }}>
-                    {!event.registered ? 'Join the event.' : 'Drop out.'}
-                  </span>
-                  <Button
-                    sx={styles.button}
-                    onClick={() => handleEvent()}
-                    disabled={sending}
-                  >
-                    {!event.registered ? 'Upload' : 'Leave'}
-                  </Button>
                 </Box>
               )}
+              <span style={{ font: '300 14px Lato', marginTop: '20px' }}>
+                {!event.registered ? 'Join the event.' : 'Drop out.'}
+              </span>
+              <Button
+                sx={styles.button}
+                onClick={() => handleEvent()}
+                disabled={sending}
+              >
+                {!event.registered ? 'Upload' : 'Leave'}
+              </Button>
             </Box>
             <Box
               sx={{

@@ -4,7 +4,16 @@ import { useNavigate } from 'react-router-dom';
 import api from './api/api';
 import { enqueueSnackbar } from 'notistack';
 
-function Event({ description, entries, thematic, name, index, id, preview }) {
+function Event({
+  description,
+  entries,
+  thematic,
+  name,
+  index,
+  id,
+  preview,
+  remainingEntries,
+}) {
   const navigate = useNavigate();
   const [hover, setHover] = React.useState(false);
   const handleFinish = () => {
@@ -56,7 +65,7 @@ function Event({ description, entries, thematic, name, index, id, preview }) {
       <span>{name}</span>
       <span>Thematic: {thematic}</span>
       <span>
-        Entries: {entries}/{entries}
+        Entries: {entries - remainingEntries}/{entries}
       </span>
     </Box>
   );

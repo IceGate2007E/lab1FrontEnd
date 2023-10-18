@@ -8,7 +8,7 @@ function OrigamiEvent({ origami, hasVoted, setVote, eventId }) {
   const navigate = useNavigate();
 
   const handleVote = () => {
-    let user = JSON.parse(localStorage('orukami_user'));
+    let user = JSON.parse(localStorage.getItem('orukami_user'));
     api.voteOrigami(origami.id, user.userId, eventId, () => {
       setVote();
     });

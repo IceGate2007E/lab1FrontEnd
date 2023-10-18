@@ -34,7 +34,7 @@ function CreateEventPage() {
     if (warning) enqueueSnackbar(warning, { variant: 'error' });
     else {
       let user = JSON.parse(localStorage.getItem('orukami_user'));
-      api.postCreateEvent({ ...state, userId: user.id }, () => {
+      api.postCreateEvent({ ...state, userId: user.userId }, () => {
         enqueueSnackbar('Event created successfully.', { variant: 'success' });
         setLoading(false);
         setState({

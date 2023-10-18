@@ -27,7 +27,7 @@ function EventDetails() {
     if (fetchRef.current) return;
     fetchRef.current = true;
     let user = JSON.parse(localStorage.getItem('orukami_user'));
-    api.getEventById(id, user.id, (res) => {
+    api.getEventById(id, user.userId, (res) => {
       setEvent(res);
       setLoading(false);
     });
@@ -37,12 +37,12 @@ function EventDetails() {
     setSending(true);
     let user = JSON.parse(localStorage.getItem('orukami_user'));
     if (event.registered)
-      api.leaveEvent(event.id, user.id, () => {
+      api.leaveEvent(event.id, user.userId, () => {
         setSending(false);
         enqueueSnackbar('You leave the event.', { variant: 'info' });
       });
     else
-      api.postOrigamiEvent(state, event.id, user.id, () => {
+      api.postOrigamiEvent(state, event.id, user.userId, () => {
         setSending(false);
         enqueueSnackbar('Origami uploaded successfully.', {
           variant: 'success',

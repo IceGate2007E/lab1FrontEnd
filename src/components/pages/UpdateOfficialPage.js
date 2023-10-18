@@ -116,7 +116,7 @@ function UploadOfficialPage() {
               difficulty: difficulty,
               type: type,
               estimatedTime: time,
-              userId: user.id,
+              userId: user.userId,
             },
             () => {
               enqueueSnackbar('Origami created successfully.', {
